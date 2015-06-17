@@ -67,6 +67,7 @@ config/local.js
 ################################################
 
 node_modules
+www
 #bower_components
 assets/js/lib   # The default directory for bower_components is
                 # changed to here. Check .bowerrc

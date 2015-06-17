@@ -1,5 +1,5 @@
 /**
- * IndexController
+ * HomeController
  *
  * @description :: Server-side logic for managing indices
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
@@ -9,7 +9,7 @@ module.exports = {
 
 
   /**
-   * `IndexController.render()`
+   * `HomeController.render()`
    */
   render: function (req, res) {
     return res.render('index', {
