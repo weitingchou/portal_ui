@@ -35,7 +35,8 @@
     "passport-cas": "~0.0.3",
     "passport-http-bearer": "~1.0.1",
     "bcryptjs": "~2.1.0",
-    "validator": "~3.40.0"
+    "validator": "~3.40.0",
+    "node-uuid": "~1.4.1"
   },
   "scripts": {
     "debug": "node debug app.js",

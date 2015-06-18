@@ -24,13 +24,30 @@ var heliosModule = angular.module('heliosModule', moduleDependencies);
 
 heliosModule.config(['$routeProvider', '$httpProvider',
   function($routeProvider, $httpProvider) {
-    $routeProvider.
-      when('/signup', {
-        templateUrl: 'views/signup.html'
+    $routeProvider
+      .when('/', {
+        templateUrl: 'views/home.html'
+      })
+      .when('/signup', {
+        templateUrl: 'views/signup.html',
+        controller: 'AuthController'
+      })
+      .when('/signin', {
+        templateUrl: 'views/signin.html',
+        controller: 'AuthController'
       })
       .otherwise({
         redirectTo: '/'
       });
+  }
+]);
+
+heliosModule.factory('Authentication', [
+  function() {
+    this.user = window.user;
+    return {
+      user: this.user
+    };
   }
 ]);
 

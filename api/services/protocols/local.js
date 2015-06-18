@@ -1,5 +1,6 @@
-var validator = require('validator');
-var crypto    = require('crypto');
+var validator = require('validator'),
+    crypto    = require('crypto'),
+    uuid      = require('node-uuid');
 
 /**
  * Local Authentication Protocol
@@ -24,10 +25,11 @@ var crypto    = require('crypto');
  * @param {Function} next
  */
 exports.register = function (req, res, next) {
-  var email    = req.param('email')
-    , username = req.param('username')
-    , password = req.param('password');
+  var email    = req.body.email,
+      username = req.body.username,
+      password = req.body.password;
 
+  sails.log.info('Registering user: email: %s, username: %s, password: %s', email, username, password);
   if (!email) {
     req.flash('error', 'Error.Passport.Email.Missing');
     return next(new Error('No email was entered.'));
@@ -43,11 +45,13 @@ exports.register = function (req, res, next) {
     return next(new Error('No password was entered.'));
   }
 
+  sails.log.info('Start to create user: '+username);
   User.create({
-    username : username
-  , email    : email
+    username : username,
+    email    : email
   }, function (err, user) {
     if (err) {
+      sails.log.error('User created error: '+err);
       if (err.code === 'E_VALIDATION') {
         if (err.invalidAttributes.email) {
           req.flash('error', 'Error.Passport.Email.Exists');
@@ -63,14 +67,15 @@ exports.register = function (req, res, next) {
     var token = crypto.randomBytes(48).toString('base64');
 
     Passport.create({
-      protocol    : 'local'
-    , password    : password
-    , user        : user.id
-    , accessToken : token
+      protocol    : 'local',
+      password    : password,
+      user        : user.id,
+      accessToken : token
     }, function (err, passport) {
       if (err) {
         if (err.code === 'E_VALIDATION') {
-          req.flash('error', 'Error.Passport.Password.Invalid');
+          sails.log.error('Passport password invalid');
+          //req.flash('error', 'Error.Passport.Password.Invalid');
         }
 
         return user.destroy(function (destroyErr) {
@@ -78,6 +83,26 @@ exports.register = function (req, res, next) {
         });
       }
 
+      sails.log.info('Passport created successfully for user %s', username);
+
+      /*
+      // Create an apikey
+      Key.create({
+        user: user.id,
+        apikey: uuid.v4(),
+        rate: '10000/10'
+      }, function (err) {
+        if (err) {
+          sails.log.error('Failed to insert key');
+          return user.destroy(function (destroyErr) {
+            next(destroyErr || err);
+          });
+        }
+
+        sails.log.info('Register user %s successfully', username);
+        next(null, user);
+      });
+      */
       next(null, user);
     });
   });

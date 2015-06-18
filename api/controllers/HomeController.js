@@ -12,6 +12,7 @@ module.exports = {
    * `HomeController.render()`
    */
   render: function (req, res) {
+    sails.log.info('rendering home page');
     return res.render('index', {
       user: JSON.stringify(req.user)
     });
