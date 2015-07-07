@@ -22,10 +22,12 @@ module.exports = {
   // },
 
   /***************************************************************************
-   * Set the port in the production environment to 80                        *
+   * Port for production environment will depend on the cloud platform       *
+   * that the app been deployed. Usually we could get the platform assigned  *
+   * port from the environment variable.                                     *
    ***************************************************************************/
 
-  // port: 80,
+  port: process.env.PORT,
 
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *
