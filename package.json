@@ -43,10 +43,10 @@
     "node-uuid": "~1.4.1"
   },
   "scripts": {
-    "debug": "node debug app.js",
-    "start": "node app.js"
+    "debug": "node debug server.js",
+    "start": "node server.js"
   },
-  "main": "app.js",
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/richchou/helios-ui.git"
