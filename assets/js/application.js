@@ -29,8 +29,9 @@ heliosModule.config(['$routeProvider', '$httpProvider',
         templateUrl: 'views/home.html'
       })
       .when('/signup', {
-        templateUrl: 'views/signup.html',
-        controller: 'AuthController'
+        //templateUrl: 'views/signup.html',
+        templateUrl: 'views/signup-fb.html',
+        //controller: 'AuthController'
       })
       .when('/signin', {
         templateUrl: 'views/signin.html',
