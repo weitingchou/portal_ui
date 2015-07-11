@@ -22,12 +22,24 @@ module.exports = {
   // },
 
   /***************************************************************************
+   * Production grunt tasks need to more time to compile.                    *
+   ***************************************************************************/
+
+  hookTimeout: 90000,
+
+  /***************************************************************************
+   * Set the host proxy in production environment.                           *
+   ***************************************************************************/
+
+  proxyHost: 'helios-ui-0.cloudapp.net',
+
+  /***************************************************************************
    * Port for production environment will depend on the cloud platform       *
    * that the app been deployed. Usually we could get the platform assigned  *
    * port from the environment variable.                                     *
    ***************************************************************************/
 
-  port: process.env.PORT,
+  port: process.env.PORT || 80,
 
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *

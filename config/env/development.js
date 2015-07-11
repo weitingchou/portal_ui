@@ -21,5 +21,6 @@ module.exports = {
   //   connection: 'someMongodbServer'
   // }
 
-  port: process.env.PORT || 1337
+  proxyHost: 'helios-ui-0.cloudapp.net',
+  port:6686
 };
