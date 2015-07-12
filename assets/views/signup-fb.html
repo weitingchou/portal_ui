@@ -1,3 +1,16 @@
 <div id="signup" class="container">
-  <a href="/auth/facebook"><img src="../images/login-with-facebook.png" alt="Facebook Login" width="154" height="22"></a>
+  <div class="row clearfix">
+    <div id="signup-form" class="col-md-4 column">
+      <h2>
+        Signup
+      </h2>
+      <div class="alert alert-danger skinny" ng-show="view.failureMessage.length > 0">
+        <span>{{view.failureMessage}}</span>
+      </div>
+      <!--
+      <button type="submit" class="btn btn-default" ng-click="submit()"></button>
+      -->
+      <img src="../images/login-with-facebook.png" alt="Facebook Login" width="154" height="22" ng-click="submit('facebook')"/>
+    </div>
+  </div>
 </div>

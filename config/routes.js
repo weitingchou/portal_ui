@@ -44,15 +44,13 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
- 'get /login': 'AuthController.login',
- 'get /logout': 'AuthController.logout',
- 'get /register': 'AuthController.register',
-
  'post /auth/local': 'AuthController.callback',
- 'post /auth/local/:action': 'AuthController.callback',
+ 'get /auth/local/logout': 'AuthController.logout',
+ 'get /auth/local/disconnect': 'AuthController.disconnect',
 
  'get /auth/:provider': 'AuthController.provider',
  'get /auth/:provider/callback': 'AuthController.callback',
- 'get /auth/:provider/:action': 'AuthController.callback',
+ 'get /auth/:provider/logout': 'AuthController.logout',
+ 'get /auth/:provider/disconnect': 'AuthController.disconnect'
 
 };
