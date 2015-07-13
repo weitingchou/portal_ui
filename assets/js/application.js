@@ -17,22 +17,24 @@ var moduleDependencies = [
   'ngRoute',
 //  'ngResource',
 //  'ngCookies',
-//  'ui.bootstrap'
+//  'ui.bootstrap',
+  'ui.router'
 ];
 
 var heliosModule = angular.module('heliosModule', moduleDependencies);
 
-heliosModule.config(['$routeProvider', '$httpProvider',
-  function($routeProvider, $httpProvider) {
-    $routeProvider
-      .when('/', {
+heliosModule.config(['$stateProvider', '$httpProvider',
+  function($stateProvider, $httpProvider) {
+    $stateProvider
+      .state('home', {
+        url: '/',
         templateUrl: 'views/home.html'
       })
-      .when('/signup', {
+      .state('/signup', {
         templateUrl: 'views/signup-fb.html',
         controller: 'AuthController'
       })
-      .when('/signin', {
+      .state('/signin', {
         templateUrl: 'views/signin.html',
         controller: 'AuthController'
       })
