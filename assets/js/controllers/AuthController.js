@@ -2,27 +2,7 @@
 
 var dependencies = ['$scope', '$http', '$window'];
 
-function AuthController($scope, $modalInstance, $state, $http, $window, homePage, signinPage) {
-
-  /**
-   * Modal opened event
-   */
-  $modalInstance.opened.then(function() {
-    $state.go(homePage);
-  });
-
-  /**
-   * Modal close event
-   */
-  $modalInstance.result.then(function() {
-    $state.go(siginPage);
-  });
-
-  $scope.$on('$stateChangeSuccess', function() {
-    if ($state.current.name != homePage) {
-      $modalInstance.dismiss('cancel');
-    }
-  });
+function AuthController($scope, $modalInstance, $state, $http, $window) {
 
   $scope.view = {
     failureMessage: ''

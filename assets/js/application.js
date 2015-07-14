@@ -17,7 +17,7 @@ var moduleDependencies = [
   'ngRoute',
 //  'ngResource',
 //  'ngCookies',
-//  'ui.bootstrap',
+  'ui.bootstrap',
   'ui.router'
 ];
 
@@ -30,19 +30,18 @@ heliosModule.config(['$stateProvider', '$urlRouterProvider',
     $stateProvider
       .state('home', {
         url: '/',
-        templateUrl: 'views/home.html',
-        controller: 'HomeController'
+        templateUrl: 'views/home.html'
       })
       .state('signin', {
         url: '/signin',
-      });
-      /*
+        templateUrl: 'modalContainer',
+        controller: 'SigninModalController'
+      })
       .state('otherwise', {
         url: '*path',
         templateUrl: 'views/404',
         controller: 'Error404Controller'
       });
-      */
   }
 ]);
 
