@@ -2,23 +2,36 @@
 
 var dependencies = ['$scope', '$http', '$window'];
 
-function localLogin() {
-}
+function AuthController($scope, $modalInstance, $state, $http, $window, homePage, signinPage) {
 
-function thirdPartyLogin() {
+  /**
+   * Modal opened event
+   */
+  $modalInstance.opened.then(function() {
+    $state.go(homePage);
+  });
 
-}
+  /**
+   * Modal close event
+   */
+  $modalInstance.result.then(function() {
+    $state.go(siginPage);
+  });
 
-function AuthController($scope, $http, $window) {
+  $scope.$on('$stateChangeSuccess', function() {
+    if ($state.current.name != homePage) {
+      $modalInstance.dismiss('cancel');
+    }
+  });
 
   $scope.view = {
     failureMessage: ''
   };
 
   /**
-   * When the user hits the submit button
+   * When the user hits the signin link
    */
-  $scope.submit = function(loginProvider) {
+  $scope.signin = function(loginProvider) {
     if (loginProvider === 'local') {
       if ($scope.password !== $scope.passwordConfirm) {
         $scope.view.failureMessage = 'Password doesn\'t match';

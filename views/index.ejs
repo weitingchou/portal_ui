@@ -35,7 +35,9 @@
 	<script type="text/javascript" src="js/scripts.js"></script>
 	<script type="text/javascript" src="js/lib/angular/angular.js"></script>
 	<script type="text/javascript" src="js/lib/angular-route/angular-route.js"></script>
+	<script type="text/javascript" src="js/lib/angular-ui-router/release/angular-ui-router.min.js"></script>
 	<script type="text/javascript" src="js/controllers/AuthController.js"></script>
+	<script type="text/javascript" src="js/controllers/HomeController.js"></script>
 	<script type="text/javascript" src="js/application.js"></script>
 </head>
 
@@ -72,20 +74,17 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= JSON.parse(user).username %><strong class="caret"></strong></a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a href="#">MyAccount</a>
+                    <a href="#/account">MyAccount</a>
                   </li>
                   <li class="divider"></li>
                   <li>
-                    <a href="#">Signout</a>
+                    <a href="#/signout">Signout</a>
                   </li>
                 </ul>
               </li>
             <% } else { %>
               <li>
-                <a href="#/signin">Signin</a>
-              </li>
-              <li>
-                <a href="#/signup">Signup</a>
+                <a ui-sref="signin" ng-click="openModal('signin')">Signin</a>
               </li>
             <% } %>
 					</ul>
@@ -98,7 +97,7 @@
 			</nav>
 		</div>
 	</div>
-  <div ng-view></div>
+  <div ui-view></div>
 </div>
 </body>
 </html>

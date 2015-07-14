@@ -23,24 +23,26 @@ var moduleDependencies = [
 
 var heliosModule = angular.module('heliosModule', moduleDependencies);
 
-heliosModule.config(['$stateProvider', '$httpProvider',
-  function($stateProvider, $httpProvider) {
+heliosModule.config(['$stateProvider', '$urlRouterProvider',
+  function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/");
+
     $stateProvider
       .state('home', {
         url: '/',
-        templateUrl: 'views/home.html'
+        templateUrl: 'views/home.html',
+        controller: 'HomeController'
       })
-      .state('/signup', {
-        templateUrl: 'views/signup-fb.html',
-        controller: 'AuthController'
-      })
-      .state('/signin', {
-        templateUrl: 'views/signin.html',
-        controller: 'AuthController'
-      })
-      .otherwise({
-        redirectTo: '/'
+      .state('signin', {
+        url: '/signin',
       });
+      /*
+      .state('otherwise', {
+        url: '*path',
+        templateUrl: 'views/404',
+        controller: 'Error404Controller'
+      });
+      */
   }
 ]);
 
