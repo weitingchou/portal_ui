@@ -18,13 +18,15 @@ var moduleDependencies = [
 //  'ngResource',
 //  'ngCookies',
   'ui.bootstrap',
-  'ui.router'
+  'ui.router',
+  'helios.session'
 ];
 
 var heliosModule = angular.module('heliosModule', moduleDependencies);
 
 heliosModule.config(['$stateProvider', '$urlRouterProvider',
   function($stateProvider, $urlRouterProvider) {
+
     $urlRouterProvider.otherwise("/");
 
     $stateProvider
@@ -34,14 +36,37 @@ heliosModule.config(['$stateProvider', '$urlRouterProvider',
       })
       .state('signin', {
         url: '/signin',
-        templateUrl: 'modalContainer',
+        templateUrl: 'views/modal-container.html',
         controller: 'SigninModalController'
-      })
+      });
+      /*
       .state('otherwise', {
         url: '*path',
         templateUrl: 'views/404',
         controller: 'Error404Controller'
       });
+      */
+  }
+]);
+
+heliosModule.run(['$rootScope', '$window', 'Session',
+  function($rootScope, $window, Session) {
+
+    $window.app = {
+      authState: function(state, user) {
+        $rootScope.$apply(function() {
+          switch (state) {
+            case 'success':
+              Session.authSuccess(user);
+              break;
+            case 'failure':
+              Session.authFailed();
+              break;
+          }
+        });
+      }
+    };
+
   }
 ]);
 

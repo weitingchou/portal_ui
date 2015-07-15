@@ -1,8 +1,8 @@
 'use strict';
 
-var dependencies = ['$scope', '$http', '$window'];
+var dependencies = ['$scope', '$http', '$window', 'Session'];
 
-function AuthController($scope, $modalInstance, $state, $http, $window) {
+function AuthController($scope, $modalInstance, $state, $http, $window, Session) {
 
   $scope.view = {
     failureMessage: ''
@@ -11,8 +11,8 @@ function AuthController($scope, $modalInstance, $state, $http, $window) {
   /**
    * When the user hits the signin link
    */
-  $scope.signin = function(loginProvider) {
-    if (loginProvider === 'local') {
+  $scope.signin = function(provider) {
+    if (provider === 'local') {
       if ($scope.password !== $scope.passwordConfirm) {
         $scope.view.failureMessage = 'Password doesn\'t match';
       } else {
@@ -32,13 +32,16 @@ function AuthController($scope, $modalInstance, $state, $http, $window) {
         });
       }
     } else {
-      $http.get('/auth/'+loginProvider+'/')
+      Session.signin(provider);
+      /*
+      $http.get('/auth/'+provider+'/')
       .success(function(data, status, headers, config) {
         $window.location = '/';
       })
       .error(function(data, status, headers, config) {
         $scope.view.failureMessage = 'Failed to register user, error: '+data;
       });
+      */
     }
   };
 }

@@ -8,7 +8,7 @@
 var AuthController = {
 
   /**
-   * Log out a user and return them to the homepage
+   * Log out an user and return them to the homepage
    *
    * Passport exposes a logout() function on req (also aliased as logOut()) that
    * can be called from any route handler which needs to terminate a login
@@ -61,7 +61,7 @@ var AuthController = {
     passport.callback(req, res, function (err, user, challenges, statuses) {
       if (err || !user) {
         sails.log.error('Error: %s, reason: %s', err, challenges);
-        return res.status(401).send({error: challenges});
+        return res.render('after-auth', { state: 'failure', user: null });
       }
 
       sails.log.info('Login user '+user);
@@ -69,7 +69,7 @@ var AuthController = {
         if (err) {
           var errmsg = 'Failed to login user '+user;
           sails.log.error(errmsg);
-          return res.status(401).send({error: errmsg});
+          return res.render('after-auth', { state: 'failure', user: null });
         }
 
         // Mark the session as authenticated to work with default Sails sessionAuth.js policy
@@ -78,7 +78,7 @@ var AuthController = {
         // Upon successful login, send the user to the homepage were req.user
         // will be available.
         sails.log.info('login successfully, redirecting to home page.');
-        res.send('OK');
+        res.render('after-auth', { state: 'success', user: req.user ? req.user : null });
       });
     });
   },

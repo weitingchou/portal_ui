@@ -8,7 +8,8 @@ function SigninModalController($scope, $modal) {
    * When the user hits the Signin link
    */
   $modal.open({
-    templateUrl: 'views/signup-fb.html',
+    templateUrl: 'views/signin-fb.html',
+    size: 'md',
     controller: 'AuthController'
   });
 }
