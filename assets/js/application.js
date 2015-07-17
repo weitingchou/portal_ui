@@ -36,20 +36,23 @@ heliosModule.config(['$stateProvider', '$urlRouterProvider',
       })
       .state('signin', {
         url: '/signin',
-        //templateUrl: 'views/modal-container.html',
-        //controller: 'SigninModalController'
         templateUrl: 'views/home.html',
-        onEnter: function($state, $modal) {
+        onEnter: function($modal) {
           $modal.open({
-            templateUrl: 'views/signin-fb.html',
-            size: 'md',
-            controller: 'AuthController'
+            templateUrl: 'views/signin.html',
+            size: 'lg',
+            controller: 'SigninController'
           });
         }
       })
       .state('signout', {
         url: '/signout',
-        controller:
+        controller: 'SignoutController'
+      })
+      .state('account', {
+        url: '/account',
+        templateUrl: 'views/device.html',
+        controller: 'DeviceController'
       });
       /*
       .state('otherwise', {

@@ -2,22 +2,22 @@
 
 var dependencies = ['$scope', '$rootScope', '$modalInstance', '$state', '$http', '$window', 'Session'];
 
-function AuthController($scope, $rootScope, $modalInstance, $state, $http, $window, Session) {
+function SigninController($scope, $rootScope, $modalInstance, $state, $http, $window, Session) {
 
   $scope.view = {
     failureMessage: ''
   };
 
-  $rootScope.$on('session-change', function() {
-    console.log('[AuthController] caught session change event');
+  $rootScope.$on('session-changed', function() {
+    console.log('[SigninController] caught session change event');
     if ($state.current.name === 'signin') {
       if (Session.isLoggedIn === true) {
-        $state.$go('home');
+        $window.location = '/';
         $modalInstance.close();
       }
     } else if ($state.current.name === 'signout') {
       if (Session.isLoggedIn === false) {
-        $state.$go('home');
+        $window.location = '/';
       }
     }
   });
@@ -30,11 +30,15 @@ function AuthController($scope, $rootScope, $modalInstance, $state, $http, $wind
     }
   });
 
-  $scope.$on('$stateChangeSuccess', function() {
-    console.log('[AuthController] caught state change event, current state: '+$state.current.name);
-    if ($state.current.name != 'signin') {
-      $modalInstance.dismiss('cancel');
-      $state.$go('home');
+  $modalInstance.result.then(function() {
+    // modal close successfully
+    if ($state.current.name === 'signin') {
+      $state.go('home');
+    }
+  }, function() {
+    // modal been dismissed
+    if ($state.current.name === 'signin') {
+      $state.go('home');
     }
   });
 
@@ -63,17 +67,8 @@ function AuthController($scope, $rootScope, $modalInstance, $state, $http, $wind
       }
     } else {
       Session.signin(provider);
-      /*
-      $http.get('/auth/'+provider+'/')
-      .success(function(data, status, headers, config) {
-        $window.location = '/';
-      })
-      .error(function(data, status, headers, config) {
-        $scope.view.failureMessage = 'Failed to register user, error: '+data;
-      });
-      */
     }
   };
 }
 
-module.exports = dependencies.concat([AuthController]);
+module.exports = dependencies.concat([SigninController]);
