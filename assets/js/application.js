@@ -36,8 +36,20 @@ heliosModule.config(['$stateProvider', '$urlRouterProvider',
       })
       .state('signin', {
         url: '/signin',
-        templateUrl: 'views/modal-container.html',
-        controller: 'SigninModalController'
+        //templateUrl: 'views/modal-container.html',
+        //controller: 'SigninModalController'
+        templateUrl: 'views/home.html',
+        onEnter: function($state, $modal) {
+          $modal.open({
+            templateUrl: 'views/signin-fb.html',
+            size: 'md',
+            controller: 'AuthController'
+          });
+        }
+      })
+      .state('signout', {
+        url: '/signout',
+        controller:
       });
       /*
       .state('otherwise', {
@@ -57,9 +69,11 @@ heliosModule.run(['$rootScope', '$window', 'Session',
         $rootScope.$apply(function() {
           switch (state) {
             case 'success':
+              console.log('[WindowApp] Authentication success!!');
               Session.authSuccess(user);
               break;
             case 'failure':
+              console.log('[WindowApp] Authentication failed!!');
               Session.authFailed();
               break;
           }

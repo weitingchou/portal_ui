@@ -81,12 +81,18 @@ passport.connect = function (req, query, profile, next) {
 
   // If the profile object contains a list of emails, grab the first one and
   // add it to the user.
-  if (profile.hasOwnProperty('emails')) {
+  if (profile.hasOwnProperty('emails') &&
+      profile.emails !== undefined) {
     user.email = profile.emails[0].value;
   }
   // If the profile object contains a username, add it to the user.
-  if (profile.hasOwnProperty('username')) {
+  if (profile.hasOwnProperty('username') &&
+      profile.username !== undefined) {
     user.username = profile.username;
+  }
+  else if (profile.hasOwnProperty('displayName') &&
+           profile.displayName !== undefined) {
+    user.displayName = profile.displayName;
   }
 
   // If neither an email or a username was available in the profile, we don't

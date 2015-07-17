@@ -77,7 +77,7 @@ var AuthController = {
 
         // Upon successful login, send the user to the homepage were req.user
         // will be available.
-        sails.log.info('login successfully, redirecting to home page.');
+        sails.log.info('login successfully, redirecting to after-auth page.');
         res.render('after-auth', { state: 'success', user: req.user ? req.user : null });
       });
     });

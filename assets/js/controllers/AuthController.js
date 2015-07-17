@@ -1,8 +1,19 @@
 'use strict';
 
-var dependencies = ['$scope', '$http', '$window', 'Session'];
+var dependencies = ['$scope', '$rootScope', '$modalInstance', '$state', '$http', '$window', 'Session'];
 
-function AuthController($scope, $modalInstance, $state, $http, $window, Session) {
+function AuthController($scope, $rootScope, $modalInstance, $state, $http, $window, Session) {
+
+  $rootScope.$on('session-change', function() {
+    console.log('[AuthController] caught session change event');
+  });
+  $scope.$on('$stateChangeSuccess', function() {
+    console.log('[AuthController] caught state change event, current state: '+$state.current.name);
+    if ($state.current.name != 'signin') {
+      $modalInstance.dismiss('cancel');
+      $state.$go('home');
+    }
+  });
 
   $scope.view = {
     failureMessage: ''
