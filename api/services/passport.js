@@ -92,7 +92,7 @@ passport.connect = function (req, query, profile, next) {
   }
   else if (profile.hasOwnProperty('displayName') &&
            profile.displayName !== undefined) {
-    user.displayName = profile.displayName;
+    user.username = profile.displayName;
   }
 
   // If neither an email or a username was available in the profile, we don't

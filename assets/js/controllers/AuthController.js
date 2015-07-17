@@ -4,9 +4,32 @@ var dependencies = ['$scope', '$rootScope', '$modalInstance', '$state', '$http',
 
 function AuthController($scope, $rootScope, $modalInstance, $state, $http, $window, Session) {
 
+  $scope.view = {
+    failureMessage: ''
+  };
+
   $rootScope.$on('session-change', function() {
     console.log('[AuthController] caught session change event');
+    if ($state.current.name === 'signin') {
+      if (Session.isLoggedIn === true) {
+        $state.$go('home');
+        $modalInstance.close();
+      }
+    } else if ($state.current.name === 'signout') {
+      if (Session.isLoggedIn === false) {
+        $state.$go('home');
+      }
+    }
   });
+
+  $rootScope.$on('session-error', function(reason) {
+    if ($state.current.name === 'signin') {
+      $scope.view = {
+        failureMessage: reason
+      };
+    }
+  });
+
   $scope.$on('$stateChangeSuccess', function() {
     console.log('[AuthController] caught state change event, current state: '+$state.current.name);
     if ($state.current.name != 'signin') {
@@ -14,10 +37,6 @@ function AuthController($scope, $rootScope, $modalInstance, $state, $http, $wind
       $state.$go('home');
     }
   });
-
-  $scope.view = {
-    failureMessage: ''
-  };
 
   /**
    * When the user hits the signin link

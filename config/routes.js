@@ -50,7 +50,7 @@ module.exports.routes = {
 
  'get /auth/:provider': 'AuthController.provider',
  'get /auth/:provider/callback': 'AuthController.callback',
- 'get /auth/:provider/logout': 'AuthController.logout',
+ 'delete /auth/:provider/logout': 'AuthController.logout',
  'get /auth/:provider/disconnect': 'AuthController.disconnect'
 
 };

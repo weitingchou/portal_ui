@@ -9,9 +9,11 @@ angular.module('helios.session', [])
         resetSession: function() {
           this.currentUser = null;
           this.isLoggedIn = false;
+          this.provider = null;
 
         },
         signin: function(provider) {
+          this.provider = provider;
           var url = '/auth/'+provider,
             width = 1000,
             height = 650,
@@ -21,12 +23,14 @@ angular.module('helios.session', [])
 
         },
         signout: function() {
-          var scope = this;
-          $http.delete('/auth').success(function() {
-            scope.resetSession();
-            $rootScope.$emit('session-changed');
-
-          });
+          if (this.isLoggedIn === true &&
+              this.provider !== undefined) {
+            var scope = this;
+            $http.delete('/auth/'+this.provider+'/logout').success(function() {
+              scope.resetSession();
+              $rootScope.$emit('session-changed');
+            });
+          }
 
         },
         authSuccess: function(userData) {
@@ -37,7 +41,8 @@ angular.module('helios.session', [])
         },
         authFailed: function() {
           this.resetSession();
-          alert('Authentication failed');
+          $rootScope.$emit('session-error', 'Authentication failed');
+          //alert('Authentication failed');
 
         }
       };
