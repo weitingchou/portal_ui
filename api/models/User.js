@@ -5,6 +5,10 @@ var User = {
   attributes: {
     username  : { type: 'string', unique: true },
     email     : { type: 'email',  unique: true },
+    birthday  : { type: 'date' },
+    bio       : { type: 'string' },
+    location  : { type: 'string' },
+    hometown  : { type: 'string' },
     passports : { collection: 'Passport', via: 'user' },
     keys      : { collection: 'Key', via: 'user' }
   }

@@ -83,7 +83,8 @@ passport.connect = function (req, query, profile, next) {
   // add it to the user.
   if (profile.hasOwnProperty('emails') &&
       profile.emails !== undefined) {
-    user.email = profile.emails[0].value;
+    //user.email = profile.emails[0].value;
+    user.email = profile.emails[0];
   }
   // If the profile object contains a username, add it to the user.
   if (profile.hasOwnProperty('username') &&

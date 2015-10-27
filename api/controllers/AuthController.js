@@ -41,6 +41,46 @@ var AuthController = {
   },
 
   /**
+   * Create a third-party authentication endpoint without requiring token
+   *
+   * @param {Object} req
+   * @param {Object} res
+   */
+  providerNoToken: function (req, res) {
+    var profile = req.body,
+        query = {
+          identifier: profile.id,
+          protocol: 'oauth2'
+        };
+    passport.connect(req, query, profile, function(err, user) {
+      if (err) {
+        sails.log.error('Error: %s', err);
+        return res.status(500).send({error: 'Internal error'});
+      } else if (!user) {
+        sails.log.error('Failded to create user');
+        return res.status(500).send({error: 'Internal error'});
+      }
+
+      sails.log.info('Login user '+JSON.stringify(user));
+      req.login(user, function (err) {
+        if (err) {
+          var errmsg = 'Failed to login user '+user;
+          sails.log.error('Error: %s', errmsg);
+          return res.status(500).send({error: 'Internal error'});
+        }
+
+        // Mark the session as authenticated to work with default Sails sessionAuth.js policy
+        req.session.authenticated = true
+
+        // Upon successful login, send the user to the homepage were req.user
+        // will be available.
+        sails.log.info('login successfully.');
+        res.send({userid: user.id});
+      });
+    });
+  },
+
+  /**
    * Create a authentication callback endpoint
    *
    * This endpoint handles everything related to creating and verifying Pass-

@@ -49,6 +49,7 @@ module.exports.routes = {
  'get /auth/local/disconnect': 'AuthController.disconnect',
 
  'get /auth/:provider': 'AuthController.provider',
+ 'post /auth/:provider/notoken': 'AuthController.providerNoToken',
  'get /auth/:provider/callback': 'AuthController.callback',
  'delete /auth/:provider/logout': 'AuthController.logout',
  'get /auth/:provider/disconnect': 'AuthController.disconnect'
