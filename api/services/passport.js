@@ -91,6 +91,10 @@ passport.connect = function (req, query, profile, next) {
       profile.username !== undefined) {
     user.username = profile.username;
   }
+  else if (profile.hasOwnProperty('name') &&
+           profile.name !== undefined) {
+    user.username = profile.name;
+  }
   else if (profile.hasOwnProperty('displayName') &&
            profile.displayName !== undefined) {
     user.username = profile.displayName;
